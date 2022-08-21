@@ -23,6 +23,11 @@ export class PaisService {
     return this.http.get<PaisResponse[]>(url);
   }
 
+  verPaisDetalle( id: string): Observable<PaisResponse[]> {
+    const url =`${this.apiUrl}/alpha/${id}`;
+    return this.http.get<PaisResponse[]>(url);
+  }
+
 
 
 }
