@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PaisResponse } from '../../interfaces/pais.interface';
+import { PaisService } from '../../services/pais.service';
 
 @Component({
   selector: 'app-por-region',
@@ -8,15 +10,30 @@ import { Component, OnInit } from '@angular/core';
 export class PorRegionComponent{
 
 
+  paisBuscado: string="";
+  placeholder: string="Buscar por región"
+  paises: PaisResponse[] = [];
+  hayError: boolean = false;
+
   regiones: string[] = ['africa', 'americas', 'asia', 'europe', 'oceania'];
 
   regionActiva: string="";
-  constructor() { }
+  constructor(private paisesService: PaisService) { }
 
   activarRegion(region: string){
+    if (region === this.regionActiva){return}
     this.regionActiva = region;
-    console.log(region);
-    //traer desde el servicio
+    this.paises = []
+    this.paisesService.buscarPaisesPorRegion(this.regionActiva).subscribe(
+      
+    )
+    this.paisesService.buscarPaisesPorRegion(this.regionActiva).subscribe(paises=>{
+      console.log(paises);
+      this.paises = paises;
+    },(err=>{
+      this.hayError = true;
+      this.paises = [];
+    }));
   }
 
 }
